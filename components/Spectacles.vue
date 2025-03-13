@@ -41,7 +41,7 @@ onMounted(async () => {
     <div class="grid-container">
       <div v-for="elem in liste" :key="elem" class="grid">
         <div v-if="elem.active" class="card">
-          <h3><a :href=withBase("'/spectacles/'+elem.link")>{{ elem.title }}</a></h3>
+          <h3><a :href="withBase('/spectacles/'+elem.link)">{{ elem.title }}</a></h3>
           <!-- <p>{{ elem.date }}</p>
           <p>{{ elem.lieu }}</p>
           <p>{{ elem.lien }}</p> -->

@@ -5,6 +5,10 @@
     "docs:preview": "vitepress preview"
   },
   "devDependencies": {
-    "vitepress": "^1.6.3"
+    "vitepress": "^1.6.3",
+    "vue-concise-slider": "^4.2.5"
+  },
+  "dependencies": {
+    "swiper": "^11.2.5"
   }
 }

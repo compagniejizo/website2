@@ -33,7 +33,8 @@ onMounted(async () => {
 </script>
 <template>
   <div>
-    <h1>AGENDA</h1>
+    <h1>L'agenda de la compagnie</h1>
+  <br/>
 
   <div class="grid-container">
     <div v-for="elem in liste" :key="elem" class="grid">

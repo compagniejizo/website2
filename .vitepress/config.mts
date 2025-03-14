@@ -3,13 +3,17 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Compagnie Jizo",
-  base:"/website2/",
+  base: "/website2/",
   description: "blabla",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Agenda', link: '/agenda' }
+      { text: 'Agenda', link: '/agenda' },
+      { text: 'Artistes', link: '/artistes' },
+      { text: 'Spectacles', link: '/spectacles' },
+      
+      { text: 'Contact',link: '/contact' }, //allways last
     ],
 
     // sidebar: [
@@ -23,7 +27,7 @@ export default defineConfig({
     // ],
 
     socialLinks: [
-      { icon: 'instagram', link: 'https://github.com/vuejs/vitepress' },
+      { icon: 'instagram', link: 'https://www.youtube.com/@CompagnieJizo' },
       { icon: 'youtube', link: 'https://github.com/vuejs/vitepress' }
     ]
   }

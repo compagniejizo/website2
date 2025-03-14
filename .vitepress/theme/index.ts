@@ -6,6 +6,7 @@ import Agenda from '../../components/Agenda.vue'
 import Spectacles from '../../components/Spectacles.vue'
 import Artistes from '../../components/Artistes.vue'
 import './style.css'
+import './custom.css'
 
 export default {
   extends: DefaultTheme,

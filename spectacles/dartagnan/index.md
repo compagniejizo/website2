@@ -1,6 +1,7 @@
 ---
 title: "Sur les traces de d'artagnan"
 active: true
+image: "/spectacles/dartagnan/img/01.jpg"
 ---
 
 # Sur les traces ...

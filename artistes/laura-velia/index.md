@@ -1,7 +1,7 @@
 ---
 name: "Laura Vélia"
 role: "Directrice Artistique"
-image: "/artistes/laura-velia/img/laura.jpeg"
+image: "/website2/artistes/laura-velia/img/laura.jpeg"
 ---
 
 # Laura Vélia

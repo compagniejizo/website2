@@ -1,7 +1,7 @@
 ---
 name: "Julie Lagnier"
 role: "Artiste associée"
-image: "/website2/artistes/julie-lagnier/img/julie.jpg"
+image: "/artistes/julie-lagnier/img/julie.jpg"
 ---
 
 # Julie Lagnier

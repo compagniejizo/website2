@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Compagnie Jizo",
-  base: "/website2/",
+  base: "/",
   description: "blabla",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config

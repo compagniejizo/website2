@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import Seance from '../components/Seance.astro';
+import { getAgenda } from '../lib/agenda';
+
+const { aVenir } = await getAgenda();
+const prochaines = aVenir.slice(0, 3);
+---
+
+<Base titre="Compagnie Jizo">
+  <section class="ouverture">
+    <div class="enveloppe">
+      <img class="logo" src="/img/logo.png" alt="" width="120" height="120" />
+      <h1>Un rêve concret d’amitié</h1>
+      <p class="chapo">
+        Des comédiens, du chant, de la danse, la pratique et la création de masque, de la
+        performance. Avec en son cœur le travail de l’acteur.
+      </p>
+      <a class="bouton" href="/agenda">Voir les prochaines dates</a>
+    </div>
+  </section>
+
+  {
+    prochaines.length > 0 && (
+      <section class="section">
+        <div class="enveloppe">
+          <h2>Prochaines dates</h2>
+          <ul class="liste">
+            {prochaines.map((s) => (
+              <Seance seance={s} />
+            ))}
+          </ul>
+          <p class="apres">
+            <a href="/agenda">Tout l’agenda</a>
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section">
+    <div class="enveloppe">
+      <h2>Ce que nous cherchons</h2>
+      <p>
+        Notre objectif est de faire vivre la tradition orale de l’acteur pour les spectateurs et de
+        passer au-delà des clichés dont le théâtre peut être réduit.
+      </p>
+      <p>
+        Nous mettons un point d’honneur à rappeler qu’il s’agit d’un art vivant, fait par des
+        vivants et pour des vivants. Délivrer des mots qui s’adressent à nos sens et pas à notre
+        compréhension. Rappeler que ce qui est important dans l’acte de parler ce n’est pas le
+        concept que je produis mais comment cela nous habite.
+      </p>
+
+      <blockquote class="exergue">
+        Pas de 4<sup>ème</sup> mur. Jamais. Comment les spectateurs entrent dans la pièce si nous
+        imaginons un mur entre nous ?
+      </blockquote>
+
+      <p>
+        Au plateau, nous parlons aux spectateurs directement. L’échange, l’écoute et le partage
+        étroit avec les spectateurs qui nous accompagnent sont les organes vitaux de chacun de nos
+        travaux. Ils sont nos complices dans chacune de nos créations pour qu’elles les touchent en
+        plein cœur, dans une optique de bousculer les âmes avec bienveillance autour d’un projet
+        d’amitié pure.
+      </p>
+      <p>
+        Nous n’avons ni la prétention de vouloir changer leur quotidien, ni celle d’avoir les bonnes
+        réponses. En revanche nous leur disons qu’il est possible de choisir sa ou ses propres
+        réponses, et d’offrir des pistes de réflexion.
+      </p>
+      <p>
+        Pour cela nous passons par de la création, évidemment, mais aussi par des stages de
+        découverte, des moments de rencontre entre les artistes et les spectateurs, et des cours où
+        la limite amateur / professionnel n’existe plus.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="enveloppe">
+      <h2>Ils parlent de nous</h2>
+      <ul class="revue">
+        <li><a href="#">Lien 1</a></li>
+        <li><a href="#">Lien 2</a></li>
+        <li><a href="#">Lien 3</a></li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ouverture {
+    padding-block: clamp(3rem, 10vw, 7rem) clamp(2rem, 6vw, 4rem);
+    border-bottom: 1px solid var(--trait);
+  }
+
+  .logo {
+    width: clamp(80px, 12vw, 120px);
+    height: auto;
+    margin-bottom: 2rem;
+  }
+
+  .chapo {
+    font-size: clamp(1.1rem, 1rem + 0.6vw, 1.35rem);
+    max-width: 46ch;
+    margin-bottom: 2rem;
+  }
+
+  .liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--trait);
+  }
+
+  .apres {
+    margin-top: 1.5rem;
+  }
+
+  .revue {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+</style>

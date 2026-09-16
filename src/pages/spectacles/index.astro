@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Vignette from '../../components/Vignette.astro';
+
+const spectacles = (await getCollection('spectacles')).sort(
+  (a, b) => a.data.ordre - b.data.ordre,
+);
+
+const limite = new Date();
+limite.setHours(0, 0, 0, 0);
+---
+
+<Base titre="Spectacles" description="Les créations de la Compagnie Jizo.">
+  <section class="section">
+    <div class="enveloppe">
+      <h1>Spectacles</h1>
+      <p class="chapo">Les créations en tournée et celles qui se préparent.</p>
+
+      <ul class="grille">
+        {
+          spectacles.map((s) => {
+            const aVenir = s.data.dates.filter((d) => d.date >= limite).length;
+            return (
+              <Vignette
+                href={`/spectacles/${s.id}`}
+                titre={s.data.titre}
+                image={s.data.affiche}
+                alt={`Affiche de ${s.data.titre}`}
+                meta={[s.data.annee, s.data.duree].filter(Boolean).join(' — ')}
+                texte={s.data.accroche ?? s.data.resume}
+                ratio="3 / 4"
+              >
+                {aVenir > 0 && (
+                  <p class="dates">
+                    <a href="/agenda">
+                      {aVenir} date{aVenir > 1 ? 's' : ''} à venir
+                    </a>
+                  </p>
+                )}
+              </Vignette>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .chapo {
+    font-size: 1.1rem;
+    max-width: 46ch;
+    margin-bottom: 3rem;
+  }
+
+  .grille {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 3rem 2rem;
+  }
+
+  .dates {
+    margin: 0.6rem 0 0;
+    font-size: 0.9rem;
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import Seance from '../../components/Seance.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const spectacles = await getCollection('spectacles');
+  return spectacles.map((s) => ({ params: { slug: s.id }, props: { s } }));
+};
+
+const { s } = Astro.props;
+const { Content } = await render(s);
+
+const limite = new Date();
+limite.setHours(0, 0, 0, 0);
+
+const dates = s.data.dates
+  .filter((d) => d.date >= limite)
+  .sort((a, b) => a.date.getTime() - b.date.getTime())
+  .map((d) => ({ ...d, spectacle: s.data.titre, slug: s.id }));
+---
+
+<Base titre={s.data.titre} description={s.data.resume}>
+  <article class="section">
+    <div class="enveloppe">
+      <h1>{s.data.titre}</h1>
+      {s.data.accroche && <p class="accroche">{s.data.accroche}</p>}
+
+      {s.data.affiche && <Image class="affiche" src={s.data.affiche} alt="" width={960} />}
+
+      <div class="texte">
+        <Content />
+      </div>
+
+      {
+        s.data.distribution.length > 0 && (
+          <section class="bloc">
+            <h2>Distribution</h2>
+            <ul class="distribution">
+              {s.data.distribution.map((d) => (
+                <li>{d}</li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+
+      <section class="bloc">
+        <h2>Dates</h2>
+        {
+          dates.length > 0 ? (
+            <ul class="liste">
+              {dates.map((d) => (
+                <Seance seance={d} />
+              ))}
+            </ul>
+          ) : (
+            <p>
+              Pas de date programmée pour l’instant. <a href="/contact">Contactez-nous</a> pour
+              accueillir le spectacle.
+            </p>
+          )
+        }
+      </section>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .accroche {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.2rem, 1rem + 0.9vw, 1.6rem);
+    max-width: 40ch;
+    margin-bottom: 2rem;
+  }
+
+  .affiche {
+    width: 100%;
+    height: auto;
+    margin-bottom: 2.5rem;
+  }
+
+  .bloc {
+    margin-top: 3.5rem;
+  }
+
+  .distribution {
+    padding-left: 1.1rem;
+    margin: 0;
+  }
+
+  .liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--trait);
+  }
+</style>

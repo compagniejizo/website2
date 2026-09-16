@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,700&family=Karla:wght@300;400;500;600&display=swap');
+
+:root {
+  color-scheme: light dark;
+
+  /* Le vert de la compagnie. Une seule valeur à changer pour reteinter le site. */
+  --vert: #3eaf7c;
+  --vert-lien: #1e7a55; /* version lisible sur fond clair (contraste AA) */
+  --vert-plein: #1e7a55; /* fond des boutons */
+  --sur-plein: #ffffff; /* texte posé sur --vert-plein */
+
+  --fond: #ffffff;
+  --fond-doux: #f6f6f7;
+  --trait: #e2e2e3;
+  --encre: #1f2328;
+  --brume: #61686f;
+
+  --display: 'Bodoni Moda', Georgia, serif;
+  --texte: 'Karla', system-ui, sans-serif;
+
+  --colonne: 68rem;
+  --marge: clamp(1.25rem, 5vw, 4rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --vert-lien: #5fd3a1;
+    --vert-plein: #3eaf7c;
+    --sur-plein: #10251c;
+
+    --fond: #1b1b1f;
+    --fond-doux: #242429;
+    --trait: #34343a;
+    --encre: #e4e4e0;
+    --brume: #9a9aa1;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font-family: var(--texte);
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.09rem);
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.6em;
+}
+
+h1 {
+  font-size: clamp(2.6rem, 1.6rem + 4.4vw, 5.2rem);
+}
+h2 {
+  font-size: clamp(1.9rem, 1.4rem + 2vw, 2.9rem);
+}
+h3 {
+  font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.5rem);
+}
+
+p {
+  margin: 0 0 1.1em;
+  max-width: 62ch;
+}
+
+a {
+  color: var(--vert-lien);
+  text-decoration-color: color-mix(in srgb, var(--vert-lien) 40%, transparent);
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid var(--vert-lien);
+  outline-offset: 3px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---------- structure ---------- */
+
+.enveloppe {
+  width: 100%;
+  max-width: var(--colonne);
+  margin-inline: auto;
+  padding-inline: var(--marge);
+}
+
+.section {
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.filet {
+  border: 0;
+  border-top: 1px solid var(--trait);
+  margin: 0;
+}
+
+.exergue {
+  font-family: var(--display);
+  font-size: clamp(1.35rem, 1.1rem + 1.2vw, 2rem);
+  font-style: italic;
+  line-height: 1.35;
+  border-left: 2px solid var(--vert);
+  padding-left: 1.2rem;
+  margin: 2.5rem 0;
+  max-width: 40ch;
+}
+
+.bouton {
+  display: inline-block;
+  font-family: var(--texte);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 0.7rem 1.4rem;
+  background: var(--vert-plein);
+  color: var(--sur-plein);
+  border: 1px solid var(--vert-plein);
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.bouton:hover {
+  background: transparent;
+  color: var(--vert-lien);
+}
+
+.bouton--sobre {
+  background: transparent;
+  border-color: var(--trait);
+  color: var(--encre);
+}
+
+.bouton--sobre:hover {
+  border-color: var(--vert-lien);
+  color: var(--vert-lien);
+}
+
+.secondaire {
+  color: var(--brume);
+}
+
+/* ---------- contenu Markdown ---------- */
+
+.texte > :first-child {
+  margin-top: 0;
+}
+
+.texte h2 {
+  font-size: clamp(1.5rem, 1.25rem + 1.2vw, 2rem);
+  margin-top: 2.5rem;
+}
+
+.texte h3 {
+  margin-top: 2rem;
+}
+
+.texte ul,
+.texte ol {
+  max-width: 62ch;
+  padding-left: 1.2rem;
+}
+
+.texte li {
+  margin-bottom: 0.4rem;
+}
+
+.texte blockquote {
+  margin: 2rem 0;
+  padding-left: 1.2rem;
+  border-left: 2px solid var(--vert);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.15rem;
+}
+
+.texte blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.texte img {
+  margin: 2rem 0;
+}
+
+.texte hr {
+  border: 0;
+  border-top: 1px solid var(--trait);
+  margin: 2.5rem 0;
+}
+
+.texte code {
+  background: var(--fond-doux);
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+}
+
+.texte pre {
+  background: var(--fond-doux);
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+}
+
+.texte pre code {
+  background: none;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

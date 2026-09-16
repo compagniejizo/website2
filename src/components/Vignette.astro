@@ -1,0 +1,79 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  href: string;
+  titre: string;
+  image?: ImageMetadata;
+  alt?: string;
+  meta?: string; // rôle, année, durée…
+  texte?: string; // une ou deux phrases
+  ratio?: string; // proportion de l'image, "4 / 5" par défaut
+}
+
+const { href, titre, image, alt = '', meta, texte, ratio = '4 / 5' } = Astro.props;
+---
+
+<li class="vignette" style={`--ratio: ${ratio}`}>
+  <a href={href}>
+    {
+      image ? (
+        <Image class="visuel" src={image} alt={alt} width={640} height={800} />
+      ) : (
+        <span class="visuel visuel--vide" aria-hidden="true" />
+      )
+    }
+    <h2>{titre}</h2>
+  </a>
+  {meta && <p class="meta secondaire">{meta}</p>}
+  {texte && <p class="texte">{texte}</p>}
+  <slot />
+</li>
+
+<style>
+  .vignette a {
+    display: block;
+    text-decoration: none;
+    color: var(--encre);
+  }
+
+  .visuel {
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--ratio);
+    object-fit: cover;
+    background: var(--fond-doux);
+    filter: grayscale(1);
+    transition: filter 0.2s ease;
+  }
+
+  .visuel--vide {
+    display: block;
+    border: 1px solid var(--trait);
+  }
+
+  .vignette a:hover .visuel,
+  .vignette a:focus-visible .visuel {
+    filter: grayscale(0);
+  }
+
+  .vignette h2 {
+    font-size: 1.45rem;
+    margin: 1rem 0 0.15rem;
+  }
+
+  .vignette a:hover h2 {
+    color: var(--vert-lien);
+  }
+
+  .meta,
+  .texte {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .texte {
+    margin-top: 0.6rem;
+  }
+</style>

@@ -1,0 +1,96 @@
+---
+const chemin = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+
+const liens = [
+  { href: '/', texte: 'Accueil' },
+  { href: '/agenda', texte: 'Agenda' },
+  { href: '/spectacles', texte: 'Spectacles' },
+  { href: '/artistes', texte: 'Artistes' },
+  { href: '/blog', texte: 'Journal' },
+  { href: '/contact', texte: 'Contact' },
+];
+---
+
+<header class="entete">
+  <div class="enveloppe barre">
+    <a class="marque" href="/">
+      <img src="/img/logo.png" alt="" width="34" height="34" />
+      <span>Compagnie Jizo</span>
+    </a>
+
+    <nav aria-label="Navigation principale">
+      <ul>
+        {
+          liens.map((l) => (
+            <li>
+              <a href={l.href} aria-current={chemin === l.href ? 'page' : undefined}>
+                {l.texte}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .entete {
+    border-bottom: 1px solid var(--trait);
+    background: var(--fond);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+
+  .barre {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 0.9rem;
+  }
+
+  .marque {
+    color: var(--encre);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--display);
+    font-size: 1.15rem;
+    text-decoration: none;
+  }
+
+  .marque img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.95rem;
+  }
+
+  ul a {
+    color: var(--encre);
+    text-decoration: none;
+    padding-block: 0.2rem;
+    border-bottom: 1px solid transparent;
+  }
+
+  ul a:hover {
+    border-bottom-color: var(--vert);
+    color: var(--vert-lien);
+  }
+
+  ul a[aria-current='page'] {
+    border-bottom-color: var(--vert);
+  }
+</style>

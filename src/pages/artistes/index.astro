@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Vignette from '../../components/Vignette.astro';
+
+const artistes = (await getCollection('artistes')).sort((a, b) => a.data.ordre - b.data.ordre);
+---
+
+<Base titre="Artistes" description="Les artistes de la Compagnie Jizo.">
+  <section class="section">
+    <div class="enveloppe">
+      <h1>Artistes</h1>
+      <p class="chapo">
+        Comédiens, chanteurs, fabricants de masques. Chaque portrait mène à sa page.
+      </p>
+
+      <ul class="grille">
+        {
+          artistes.map((a) => (
+            <Vignette
+              href={`/artistes/${a.id}`}
+              titre={a.data.nom}
+              image={a.data.portrait}
+              alt={`Portrait de ${a.data.nom}`}
+              meta={a.data.role}
+              texte={a.data.extrait}
+            />
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .chapo {
+    font-size: 1.1rem;
+    max-width: 46ch;
+    margin-bottom: 3rem;
+  }
+
+  .grille {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 3rem 2rem;
+  }
+</style>

@@ -1,0 +1,119 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const artistes = await getCollection('artistes');
+  return artistes.map((a) => ({ params: { slug: a.id }, props: { a } }));
+};
+
+const { a } = Astro.props;
+const { Content } = await render(a);
+
+// Les spectacles où l'artiste est cité dans la distribution.
+const spectacles = (await getCollection('spectacles')).filter((s) =>
+  s.data.distribution.some((d) => d.includes(a.data.nom)),
+);
+---
+
+<Base titre={a.data.nom} description={a.data.extrait ?? a.data.role}>
+  <article class="section">
+    <div class="enveloppe">
+      <p class="retour"><a href="/artistes">Tous les artistes</a></p>
+
+      <div class="tete">
+        {
+          a.data.portrait && (
+            <Image
+              class="portrait"
+              src={a.data.portrait}
+              alt={`Portrait de ${a.data.nom}`}
+              width={640}
+              height={800}
+            />
+          )
+        }
+        <div>
+          <h1>{a.data.nom}</h1>
+          <p class="role">{a.data.role}</p>
+          <div class="texte"><Content /></div>
+
+          {
+            spectacles.length > 0 && (
+              <section class="bloc">
+                <h2>Sur scène dans</h2>
+                <ul>
+                  {spectacles.map((s) => (
+                    <li>
+                      <a href={`/spectacles/${s.id}`}>{s.data.titre}</a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .retour {
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .tete {
+    display: grid;
+    grid-template-columns: minmax(0, 20rem) 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .portrait {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: var(--fond-doux);
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3.4rem);
+    margin-bottom: 0.2rem;
+  }
+
+  .role {
+    color: var(--brume);
+    margin-bottom: 2rem;
+  }
+
+  .bloc {
+    margin-top: 3rem;
+    border-top: 1px solid var(--trait);
+    padding-top: 1.5rem;
+  }
+
+  .bloc h2 {
+    font-size: 1.4rem;
+  }
+
+  .bloc ul {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  @media (max-width: 48rem) {
+    .tete {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .portrait {
+      max-width: 20rem;
+    }
+  }
+</style>

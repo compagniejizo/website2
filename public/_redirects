@@ -1,0 +1,6 @@
+# Anciennes URLs VitePress -> nouvelles URLs Astro
+# (format Netlify / Cloudflare Pages ; voir README pour nginx et Apache)
+/agenda.html      /agenda      301
+/artistes.html    /artistes    301
+/spectacles.html  /spectacles  301
+/contact.html     /contact     301

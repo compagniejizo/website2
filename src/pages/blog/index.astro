@@ -1,0 +1,151 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+
+const articles = (await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.brouillon))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const dateLongue = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<Base
+  titre="Journal"
+  description="Carnets de création, retours de stage et nouvelles de la Compagnie Jizo."
+>
+  <section class="section">
+    <div class="enveloppe">
+      <h1>Journal</h1>
+      <p class="chapo">
+        Carnets de création, retours de stage, nouvelles de la compagnie.
+        <a href="/rss.xml">Suivre le flux</a>.
+      </p>
+
+      {
+        articles.length === 0 ? (
+          <p>Le premier article arrive bientôt.</p>
+        ) : (
+          <ul class="liste">
+            {articles.map((a) => (
+              <li class="article">
+                <div class="corps">
+                  <p class="date secondaire">
+                    <time datetime={a.data.date.toISOString().slice(0, 10)}>
+                      {dateLongue.format(a.data.date)}
+                    </time>
+                    {a.data.brouillon && <span class="brouillon">brouillon</span>}
+                  </p>
+                  <h2>
+                    <a href={`/blog/${a.id}`}>{a.data.titre}</a>
+                  </h2>
+                  <p>{a.data.description}</p>
+                  {a.data.tags.length > 0 && (
+                    <ul class="tags secondaire">
+                      {a.data.tags.map((t) => (
+                        <li>{t}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                {a.data.image && (
+                  <a class="visuel" href={`/blog/${a.id}`} tabindex="-1" aria-hidden="true">
+                    <Image src={a.data.image} alt="" width={480} height={270} />
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .chapo {
+    font-size: 1.1rem;
+    max-width: 48ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--trait);
+  }
+
+  .article {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 15rem);
+    gap: 2rem;
+    align-items: start;
+    padding-block: 2.5rem;
+    border-bottom: 1px solid var(--trait);
+  }
+
+  .date {
+    font-size: 0.9rem;
+    margin: 0 0 0.4rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+
+  .brouillon {
+    border: 1px solid var(--trait);
+    padding: 0 0.4rem;
+    font-size: 0.8rem;
+  }
+
+  .article h2 {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .article h2 a {
+    color: var(--encre);
+    text-decoration: none;
+  }
+
+  .article h2 a:hover {
+    color: var(--vert-lien);
+  }
+
+  .corps p {
+    margin-bottom: 0;
+  }
+
+  .tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0.8rem 0 0;
+    font-size: 0.85rem;
+  }
+
+  .visuel img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--fond-doux);
+  }
+
+  @media (max-width: 44rem) {
+    .article {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .visuel {
+      order: -1;
+    }
+  }
+</style>

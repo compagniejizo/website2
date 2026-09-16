@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base titre="Contact" description="Contacter la Compagnie Jizo : diffusion, presse, ateliers.">
+  <section class="section">
+    <div class="enveloppe">
+      <h1>Contact</h1>
+      <p class="chapo">
+        Pour programmer un spectacle, organiser un atelier ou simplement discuter du travail.
+      </p>
+
+      <dl class="coordonnees">
+        <div>
+          <dt>Diffusion et production</dt>
+          <dd><a href="mailto:contact@compagniejizo.fr">contact@compagniejizo.fr</a></dd>
+        </div>
+        <div>
+          <dt>Vidéos et captations</dt>
+          <dd><a href="https://www.youtube.com/@CompagnieJizo">youtube.com/@CompagnieJizo</a></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .chapo {
+    font-size: 1.1rem;
+    max-width: 46ch;
+  }
+
+  .coordonnees {
+    margin-top: 3rem;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .coordonnees div {
+    border-top: 1px solid var(--trait);
+    padding-top: 1rem;
+  }
+
+  dt {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  dd {
+    margin: 0;
+  }
+</style>

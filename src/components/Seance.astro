@@ -1,0 +1,131 @@
+---
+import { formatDate, type Seance } from '../lib/agenda';
+
+interface Props {
+  seance: Seance;
+  passee?: boolean;
+}
+
+const { seance, passee = false } = Astro.props;
+const d = seance.date;
+---
+
+<li class:list={['seance', { passee }]}>
+  <time class="quand" datetime={formatDate.iso(d)}>
+    <span class="numero">{formatDate.numero(d)}</span>
+    <span class="mois">{formatDate.mois(d)}</span>
+    <span class="annee secondaire">{formatDate.annee(d)}</span>
+  </time>
+
+  <div class="quoi">
+    <h3><a href={`/spectacles/${seance.slug}`}>{seance.spectacle}</a></h3>
+    <p class="ou">
+      {seance.lieu}, {seance.ville}
+      {seance.heure && <span class="secondaire"> — {seance.heure}</span>}
+    </p>
+    {seance.note && <p class="note secondaire">{seance.note}</p>}
+  </div>
+
+  <div class="billet">
+    {
+      passee ? null : seance.complet ? (
+        <span class="etat etat--complet">Complet</span>
+      ) : seance.billetterie ? (
+        <a class="bouton" href={seance.billetterie} rel="noopener">
+          Réserver
+        </a>
+      ) : (
+        <span class="etat secondaire">Billetterie à venir</span>
+      )
+    }
+  </div>
+</li>
+
+<style>
+  .seance {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr auto;
+    gap: 1rem 2rem;
+    align-items: center;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--trait);
+  }
+
+  .quand {
+    font-family: var(--display);
+    line-height: 1;
+    display: grid;
+    justify-items: start;
+    gap: 0.2rem;
+  }
+
+  .numero {
+    font-size: 3rem;
+    font-weight: 500;
+  }
+
+  .mois {
+    font-size: 1.1rem;
+    font-style: italic;
+  }
+
+  .annee {
+    font-family: var(--texte);
+    font-size: 0.8rem;
+  }
+
+  .quoi h3 {
+    margin: 0 0 0.25rem;
+  }
+
+  .quoi h3 a {
+    color: var(--encre);
+    text-decoration: none;
+  }
+
+  .quoi h3 a:hover {
+    text-decoration: underline;
+  }
+
+  .ou,
+  .note {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .etat {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--brume);
+  }
+
+  .etat--complet {
+    color: var(--encre);
+    border: 1px solid var(--trait);
+    padding: 0.6rem 1rem;
+  }
+
+  .passee {
+    color: var(--brume);
+  }
+
+  .passee .numero {
+    font-size: 2.2rem;
+  }
+
+  @media (max-width: 40rem) {
+    .seance {
+      grid-template-columns: 4.5rem 1fr;
+      align-items: start;
+      gap: 0.75rem 1.25rem;
+    }
+
+    .numero {
+      font-size: 2.2rem;
+    }
+
+    .billet {
+      grid-column: 2;
+    }
+  }
+</style>

@@ -1,0 +1,53 @@
+---
+const annee = new Date().getFullYear();
+---
+
+<footer class="pied">
+  <div class="enveloppe grille">
+    <p class="secondaire">Compagnie Jizo — {annee}</p>
+    <ul>
+      <li><a href="https://www.youtube.com/@CompagnieJizo">YouTube</a></li>
+      <li><a href="/contact">Nous écrire</a></li>
+      <li><a href="/rss.xml">Flux RSS</a></li>
+      <li><a href="/mentions-legales">Mentions légales</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .pied {
+    border-top: 1px solid var(--trait);
+    padding-block: 2.5rem;
+    margin-top: 4rem;
+    font-size: 0.9rem;
+  }
+
+  .grille {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .grille p {
+    margin: 0;
+  }
+
+  ul a {
+    color: var(--brume);
+  }
+
+  ul a:hover {
+    color: var(--vert-lien);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import Seance from '../components/Seance.astro';
+import { getAgenda } from '../lib/agenda';
+
+const { aVenir, passees } = await getAgenda();
+---
+
+<Base
+  titre="Agenda"
+  description="Toutes les dates de tournée de la Compagnie Jizo et les liens de réservation."
+>
+  <section class="section">
+    <div class="enveloppe">
+      <h1>Agenda</h1>
+      <p class="chapo">
+        Où nous jouons, quand, et comment réserver. Écrivez-nous si vous souhaitez accueillir un
+        spectacle.
+      </p>
+
+      {
+        aVenir.length > 0 ? (
+          <ul class="liste">
+            {aVenir.map((s) => (
+              <Seance seance={s} />
+            ))}
+          </ul>
+        ) : (
+          <div class="vide">
+            <p>
+              Aucune date n’est ouverte à la réservation pour le moment. La prochaine tournée se
+              prépare — <a href="/contact">écrivez-nous</a> pour être prévenu.
+            </p>
+          </div>
+        )
+      }
+
+      {
+        passees.length > 0 && (
+          <details class="archive">
+            <summary>Dates passées ({passees.length})</summary>
+            <ul class="liste">
+              {passees.map((s) => (
+                <Seance seance={s} passee />
+              ))}
+            </ul>
+          </details>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .chapo {
+    font-size: 1.1rem;
+    max-width: 48ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--trait);
+  }
+
+  .vide {
+    border: 1px solid var(--trait);
+    padding: 2rem;
+    background: var(--fond-doux);
+  }
+
+  .vide p {
+    margin: 0;
+  }
+
+  .archive {
+    margin-top: 4rem;
+    border-top: 1px solid var(--trait);
+    padding-top: 1.5rem;
+  }
+
+  .archive summary {
+    cursor: pointer;
+    font-family: var(--display);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+</style>

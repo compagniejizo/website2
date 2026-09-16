@@ -1,0 +1,165 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const articles = await getCollection(
+    'blog',
+    ({ data }) => import.meta.env.DEV || !data.brouillon,
+  );
+  const tries = articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+  return tries.map((article, i) => ({
+    params: { slug: article.id },
+    props: { article, suivant: tries[i - 1], precedent: tries[i + 1] },
+  }));
+};
+
+const { article, suivant, precedent } = Astro.props;
+const { Content } = await render(article);
+
+const dateLongue = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<Base titre={article.data.titre} description={article.data.description}>
+  <article class="section">
+    <div class="enveloppe">
+      <p class="retour"><a href="/blog">Journal</a></p>
+
+      <header class="entete">
+        <p class="date secondaire">
+          <time datetime={article.data.date.toISOString().slice(0, 10)}>
+            {dateLongue.format(article.data.date)}
+          </time>
+          <span>{article.data.auteur}</span>
+        </p>
+        <h1>{article.data.titre}</h1>
+        <p class="chapo">{article.data.description}</p>
+      </header>
+
+      {
+        article.data.image && (
+          <Image class="visuel" src={article.data.image} alt="" width={1200} height={675} />
+        )
+      }
+
+      <div class="texte">
+        <Content />
+      </div>
+
+      {
+        article.data.maj && (
+          <p class="secondaire maj">
+            Mis à jour le {dateLongue.format(article.data.maj)}.
+          </p>
+        )
+      }
+
+      <nav class="voisins" aria-label="Autres articles">
+        {
+          precedent && (
+            <a href={`/blog/${precedent.id}`}>
+              <span class="secondaire">Article précédent</span>
+              {precedent.data.titre}
+            </a>
+          )
+        }
+        {
+          suivant && (
+            <a class="droite" href={`/blog/${suivant.id}`}>
+              <span class="secondaire">Article suivant</span>
+              {suivant.data.titre}
+            </a>
+          )
+        }
+      </nav>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .retour {
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .entete {
+    max-width: 44ch;
+  }
+
+  .date {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 1.5rem + 3vw, 3.6rem);
+  }
+
+  .chapo {
+    font-size: 1.15rem;
+    color: var(--brume);
+  }
+
+  .visuel {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--fond-doux);
+    margin: 2.5rem 0;
+  }
+
+  .texte {
+    margin-top: 2.5rem;
+  }
+
+  .maj {
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-top: 2rem;
+  }
+
+  .voisins {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: space-between;
+    border-top: 1px solid var(--trait);
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+  }
+
+  .voisins a {
+    display: grid;
+    gap: 0.25rem;
+    max-width: 20rem;
+    color: var(--encre);
+    text-decoration: none;
+    font-family: var(--display);
+    font-size: 1.15rem;
+  }
+
+  .voisins a:hover {
+    color: var(--vert-lien);
+  }
+
+  .voisins span {
+    font-family: var(--texte);
+    font-size: 0.85rem;
+  }
+
+  .droite {
+    text-align: right;
+    margin-left: auto;
+  }
+</style>

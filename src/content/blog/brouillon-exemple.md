@@ -7,3 +7,5 @@ brouillon: true
 
 Un article avec `brouillon: true` est visible en local pendant l'écriture, mais
 n'est pas publié lors du `npm run build`.
+
+test

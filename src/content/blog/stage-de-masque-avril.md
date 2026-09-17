@@ -8,11 +8,21 @@ tags:
   - transmission
 ---
 
-Dix-huit participants, dont sept n'étaient jamais montés sur un plateau. Le
-premier matin, on ne se présente pas : on marche, on s'arrête, on regarde.
+Nous sommes arrivés avec quinze pages et deux chansons. Nous repartons avec
+cinquante minutes et une seule certitude : le masque n'entre qu'au dernier
+tiers.
 
-Le masque neutre ne pardonne rien. Il rend visible chaque intention parasite, et
-c'est précisément pour ça qu'il met tout le monde au même niveau dès la première
-heure — le métier n'aide pas, il encombre plutôt.
+## Ce que la salle nous a appris
 
-Le prochain stage aura lieu à l'automne. Écrivez-nous pour être prévenu.
+La première sortie de résidence s'est jouée devant vingt personnes, lumière
+allumée. Personne n'a bougé pendant la complainte, et trois personnes ont
+répondu à voix haute quand la question a été posée au public. C'est exactement
+ce que nous cherchions.
+
+> Nous savons que vous êtes venus nous voir, et nous vous invitons à transformer
+> le monde que nous créons ensemble le temps d'une pièce.
+
+## La suite
+
+Une deuxième résidence en septembre, puis la création à Nantes. Les dates
+ouvertes à la réservation sont dans [l'agenda](/agenda).

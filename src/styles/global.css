@@ -14,10 +14,8 @@
   --trait: #e2e2e3;
   --encre: #1f2328;
   --brume: #61686f;
-
-  --display: 'Bodoni Moda', Georgia, serif;
-  --texte: 'Karla', system-ui, sans-serif;
-
+  /*--display: 'Bodoni Moda', Georgia, serif;*/
+  /*--texte: 'Karla', system-ui, sans-serif;*/
   --colonne: 68rem;
   --marge: clamp(1.25rem, 5vw, 4rem);
 }
@@ -78,7 +76,7 @@ h3 {
 
 p {
   margin: 0 0 1.1em;
-  max-width: 62ch;
+  /*max-width: 62ch;*/
 }
 
 a {

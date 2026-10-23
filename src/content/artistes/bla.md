@@ -1,5 +1,5 @@
 ---
-nom: bla bla
+nom: bla bla bli
 role: Comédien, chant
 extrait: Chanteur et acteur, il signe la matière sonore des créations.
 portrait: ./images/autre-prenom.png
